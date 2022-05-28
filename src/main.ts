@@ -1,20 +1,15 @@
 import App from './App.vue';
-import { DataGridFactory } from './services/DataGridFactory';
-import { GameService } from './services/GameService';
-import { GridGameFactory } from './services/GridGameFactory';
-import { GridViewFactory } from './services/GridViewFactory';
+import { GameService } from './Grid/GameService';
+import { SudokuDigitsFactory } from './Grid/SudokuDigitsFactory';
+import { SudokuFactory } from './Grid/SudokuFactory';
 import { createApp } from 'vue';
 
-const gameService = () => {
-  const gridViewFactory = new GridViewFactory();
-  const dataGridFactory = new DataGridFactory();
-  const gridGameFactory = new GridGameFactory();
-
-  return new GameService(gridViewFactory, dataGridFactory, gridGameFactory);
-};
+const sudokuDigitsFactory = new SudokuDigitsFactory();
+const sudokuFactory = new SudokuFactory();
+const gameService = new GameService(sudokuDigitsFactory, sudokuFactory);
 
 const app = createApp(App);
 
-app.provide('gameService', gameService());
+app.provide('gameService', gameService);
 
 app.mount('#app');

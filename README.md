@@ -1,4 +1,5 @@
 # Sudoku generator
+https://sudoku-generator-serge.netlify.app/
 
 ## install dependencies
 `npm i`

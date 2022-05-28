@@ -1,4 +1,4 @@
-import { AnyArray, CellViewModel, Difficulty, GridViewModel } from '../Grid/constants';
+import { AnyArray, CellViewModel, GridViewModel } from '../Grid/constants';
 
 import { ArrayHelper as A } from '../Grid/ArrayHelper';
 
@@ -13,9 +13,9 @@ export class GridGameFactory {
 
   create(gridView: GridViewModel, difficulty: number): GridViewModel {
     return gridView.map((line) => {
-      return line.map((block) => {
+      return line.map((block: any) => {
         const unformattedBlock = A.mergeArrays(block);
-        const numberOfCellsToKeep = this.getNumberOfCellsToKeep(unformattedBlock, difficulty);
+        const numberOfCellsToKeep = this.getNumberOfCellsToKeep(unformattedBlock as any, difficulty);
         const pickArray = [...unformattedBlock];
         const valuesToKeep: AnyArray = [];
 
@@ -25,7 +25,7 @@ export class GridGameFactory {
           valuesToKeep.push(valueToKeep);
         }
 
-        const redacted = unformattedBlock.map((cell) => {
+        const redacted = unformattedBlock.map((cell: any) => {
           if (!valuesToKeep.includes(cell)) {
             cell.isHidden = true;
             cell.referenceValue = null;
@@ -36,6 +36,6 @@ export class GridGameFactory {
 
         return A.formatToBlock(redacted);
       });
-    });
+    }) as any;
   }
 }

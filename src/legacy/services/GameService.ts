@@ -11,7 +11,7 @@ export class GameService {
   ) {}
 
   create(length: number, difficulty: number): GridViewModel {
-    const dataGrid = this.dataGridFactory.create(length);
+    const dataGrid = this.dataGridFactory.create(length) as any;
     const gridView = this.gridViewFactory.create(dataGrid);
     const obfuscatedGridView = this.gridGameFactory.create(gridView, difficulty);
 

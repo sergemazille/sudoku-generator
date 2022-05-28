@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { CellViewModel, GridViewModel, PICKER_COLORS } from '../Grid/constants';
+import { PICKER_COLORS, Puzzle } from '../common/constants';
+import { CellData } from '../Grid/Cell';
 
 const props = defineProps({
   grid: {
-    type: Array as PropType<GridViewModel>,
+    type: Array as PropType<Puzzle>,
     default: () => [],
   },
 
@@ -19,11 +20,7 @@ const props = defineProps({
   },
 });
 
-const changeCellColor = (cell: CellViewModel) => {
-  cell.color = props.currentColor;
-};
-
-const handleInput = (eventEl: HTMLInputElement, cell: CellViewModel) => {
+const handleInput = (eventEl: HTMLInputElement, cell: CellData) => {
   const { value } = eventEl;
 
   if (!value.match(/^\d$/)) {
@@ -31,7 +28,11 @@ const handleInput = (eventEl: HTMLInputElement, cell: CellViewModel) => {
     return;
   }
 
-  cell.referenceValue = +value;
+  cell.guess = +value;
+};
+
+const changeCellColor = (cell: CellData) => {
+  cell.textColor = props.currentColor;
 };
 </script>
 
@@ -41,20 +42,23 @@ const handleInput = (eventEl: HTMLInputElement, cell: CellViewModel) => {
       <span class="block" :key="index" v-for="(block, index) in line">
         <span class="block-set" :key="index" v-for="(blockSet, index) in block">
           <span class="cell" :key="index" v-for="(cell, index) in blockSet">
-            <span v-if="gameInProgress">
-              <span v-if="!cell.isHidden" :style="{ color: cell.color }">{{ cell.correctValue }}</span>
+            <span v-if="gameInProgress" class="full-width">
+              <span v-if="cell.isHint" :style="{ color: cell.textColor }" class="hint">
+                {{ cell.value }}
+              </span>
+
               <input
-                v-if="cell.isHidden"
+                v-if="!cell.isHint"
                 type="text"
                 pattern="[0-9]+"
                 @keyup="handleInput($event.target as HTMLInputElement, cell)"
                 @click="changeCellColor(cell)"
-                :style="{ color: cell.color }"
+                :style="{ color: cell.textColor }"
               />
             </span>
 
             <span v-else>
-              <span :style="{ color: cell.color }">{{ cell.referenceValue ?? cell.correctValue }}</span>
+              <span :style="{ color: cell.textColor }">{{ cell.guess ?? cell.value }}</span>
             </span>
           </span>
         </span>
@@ -79,16 +83,34 @@ const handleInput = (eventEl: HTMLInputElement, cell: CellViewModel) => {
 
 .cell {
   display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
   width: 60px;
   height: 60px;
+}
+
+.full-width {
+  display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%; 
+  background-color: rgb(232, 232, 232);
 }
 
 input {
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
+  border: 0;
   font-size: 2.2rem;
   text-align: center;
 }

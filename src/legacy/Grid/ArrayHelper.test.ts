@@ -4,9 +4,9 @@ import { ArrayHelper as A } from './ArrayHelper';
 
 describe('ArrayHelper', () => {
   it('mergeArrays', () => {
-    const arrayOne = [1, { valueArrays: [2, 3] }, 4];
-    const arrayTwo = [['a'], 'b', true, null];
-    const arrayThree = [undefined, 4, { value: 2 }];
+    const arrayOne = [1, { valueArrays: [2, 3] }, 4] as any;
+    const arrayTwo = [['a'], 'b', true, null] as any;
+    const arrayThree = [undefined, 4, { value: 2 }] as any;
 
     const actual = A.mergeArrays([arrayOne, arrayTwo, arrayThree]);
     const expected = [1, { valueArrays: [2, 3] }, 4, ['a'], 'b', true, null, undefined, 4, { value: 2 }];

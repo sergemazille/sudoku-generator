@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ArrayHelper as A } from '../Grid/ArrayHelper';
+import { ArrayHelper as A } from './ArrayHelper';
 
 describe('ArrayHelper', () => {
   it('mergeArrays', () => {
@@ -14,33 +14,27 @@ describe('ArrayHelper', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('invertLinesAndCols', () => {
-    const refArray = [
-      [1, 2],
-      [3, 4],
-    ];
-
-    const actual = A.invertLinesAndCols(refArray);
-    const expected = [
-      [1, 3],
-      [2, 4],
-    ];
+  it('createArrayOfIndices', () => {
+    const length = 3;
+    const actual = A.createArrayOfIndices(length);
+    const expected = [0, 1, 2];
 
     expect(actual).toEqual(expected);
-  });
-
-  it('invertLinesAndCols throws if array length is different from sub-arrays lengths', () => {
-    const refArray = [[1, 2], [3]];
-
-    const actual = () => A.invertLinesAndCols(refArray);
-
-    expect(actual).toThrow();
   });
 
   it('createDigitsArray', () => {
     const length = 3;
     const actual = A.createDigitsArray(length);
     const expected = [1, 2, 3];
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('getValuesFromIndices', () => {
+    const array = ['a', 'b', 'c', 'd', 'e', 'f'];
+    const indices = [1, 2, 3];
+    const actual = A.getValuesFromIndices(indices, array);
+    const expected = ['b', 'c', 'd'];
 
     expect(actual).toEqual(expected);
   });

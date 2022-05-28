@@ -46,7 +46,7 @@ export class DataGridFactory {
       return invertedCol.map((block) => {
         return A.invertLinesAndCols(block);
       });
-    });
+    }) as any;
 
     return A.invertLinesAndCols(gridCols) as DataGrid;
   }

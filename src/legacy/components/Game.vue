@@ -23,7 +23,7 @@ function endGame() {
 function newGame() {
   gameInProgress.value = true;
   gameId.value = Date.now();
-  generateSudoku(Difficulty.normal);
+  generateSudoku(Difficulty.easy);
 }
 
 function updateCurrentColor(value: string) {
