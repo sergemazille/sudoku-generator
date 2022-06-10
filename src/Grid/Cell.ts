@@ -21,6 +21,12 @@ export class Cell {
     Guard.isSingleDigitExcluding0(value);
   }
 
+  get data() {
+    const { value, isHint, textColor, guess } = this;
+
+    return { value, isHint, textColor, guess };
+  }
+
   changeTextColor({ color, availableColors }: ChangeTextColorParams) {
     if (!availableColors.includes(color)) {
       throw new Error('Text color not part of the available colors');
