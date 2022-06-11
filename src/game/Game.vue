@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { inject, onBeforeMount, ref } from 'vue';
 import { GRID_SIZE, PICKER_COLORS, Puzzle } from '../common/constants';
-import { GameService } from './GameService';
 import ColorPicker from './ColorPicker.vue';
+import { GameService } from './GameService';
 import Grid from './Grid.vue';
 
 const gameService = inject('gameService') as GameService;
@@ -11,8 +11,8 @@ const sudoku = ref([] as Partial<Puzzle>);
 const gameInProgress = ref(true);
 const currentColor = ref(PICKER_COLORS[0]);
 
-function generateSudoku() {
-  sudoku.value = gameService.create(GRID_SIZE);
+async function generateSudoku() {
+  sudoku.value = (await gameService.create(GRID_SIZE)) as Puzzle;
 }
 
 function endGame() {
@@ -30,7 +30,7 @@ function updateCurrentColor(value: string) {
 }
 
 function resolveSudoku() {
-  sudoku.value = gameService.resolve(sudoku.value as Puzzle)
+  sudoku.value = gameService.solve(sudoku.value as Puzzle);
 
   endGame();
 }

@@ -9,14 +9,16 @@ export class GameService {
     private readonly sudokuFactory: SudokuFactory
   ) {}
 
-  create(size: number) {
-    const { digits } = this.sudokuDigitsFactory.create(size);
-    const sudoku = this.sudokuFactory.create(digits);
+  async create(size: number) {
+    return new Promise((resolve) => {
+      const { digits } = this.sudokuDigitsFactory.create(size);
+      const sudoku = this.sudokuFactory.create(digits);
 
-    return sudoku;
+      return resolve(sudoku);
+    });
   }
 
-  resolve(sudoku: Puzzle) {
+  solve(sudoku: Puzzle) {
     return sudoku.map((line) => {
       return line!.map((block) => {
         return block.map((blockSet) => {
@@ -24,13 +26,13 @@ export class GameService {
             if (cell.isHint) {
               return cell;
             }
-  
+
             cell.textColor = Color.correct;
-  
+
             if (cell.guess !== cell.value) {
               cell.textColor = cell.guess ? Color.error : Color.reveal;
             }
-  
+
             return cell;
           });
         });
