@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject, onBeforeMount, ref } from 'vue';
-import { Color, GRID_SIZE, PICKER_COLORS, Puzzle } from '../common/constants';
+import { GRID_SIZE, PICKER_COLORS, Puzzle } from '../common/constants';
 import { GameService } from './GameService';
 import ColorPicker from './ColorPicker.vue';
 import Grid from './Grid.vue';
@@ -30,25 +30,7 @@ function updateCurrentColor(value: string) {
 }
 
 function resolveSudoku() {
-  sudoku.value = sudoku.value.map((line) => {
-    return line!.map((block) => {
-      return block.map((blockSet) => {
-        return blockSet.map((cell) => {
-          if (cell.isHint) {
-            return cell;
-          }
-
-          cell.textColor = Color.correct;
-
-          if (cell.guess !== cell.value) {
-            cell.textColor = cell.guess ? Color.error : Color.reveal;
-          }
-
-          return cell;
-        });
-      });
-    });
-  });
+  sudoku.value = gameService.resolve(sudoku.value as Puzzle)
 
   endGame();
 }
