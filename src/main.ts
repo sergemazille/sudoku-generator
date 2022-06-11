@@ -1,12 +1,12 @@
 import App from './App.vue';
+import { DigitsWorkerFactory } from './grid/DigitsWorkerFactory';
 import { GameService } from './game/GameService';
-import { SudokuDigitsFactory } from './grid/SudokuDigitsFactory';
 import { SudokuFactory } from './grid/SudokuFactory';
 import { createApp } from 'vue';
 
-const sudokuDigitsFactory = new SudokuDigitsFactory();
 const sudokuFactory = new SudokuFactory();
-const gameService = new GameService(sudokuDigitsFactory, sudokuFactory);
+const digitsWorkerFactory = new DigitsWorkerFactory();
+const gameService = new GameService(sudokuFactory, digitsWorkerFactory);
 
 const app = createApp(App);
 

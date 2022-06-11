@@ -1,20 +1,27 @@
 import { Color, Puzzle } from '../common/constants';
 
-import { SudokuDigitsFactory } from '../grid/SudokuDigitsFactory';
+import { DigitsWorkerFactory } from '../grid/DigitsWorkerFactory';
 import { SudokuFactory } from '../grid/SudokuFactory';
 
 export class GameService {
   constructor(
-    private readonly sudokuDigitsFactory: SudokuDigitsFactory,
-    private readonly sudokuFactory: SudokuFactory
+    private readonly sudokuFactory: SudokuFactory,
+    private readonly digitsWorkerFactory: DigitsWorkerFactory
   ) {}
 
   async create(size: number) {
     return new Promise((resolve) => {
-      const { digits } = this.sudokuDigitsFactory.create(size);
-      const sudoku = this.sudokuFactory.create(digits);
+      const { sudokuFactory, digitsWorkerFactory } = this;
+      const digitsWorker = digitsWorkerFactory.create();
 
-      return resolve(sudoku);
+      digitsWorker.postMessage(size);
+
+      digitsWorker.onmessage = function ({ data: digits }) {
+        const sudoku = sudokuFactory.create(digits);
+
+        resolve(sudoku);
+        digitsWorker.terminate();
+      };
     });
   }
 
