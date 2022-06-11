@@ -1,5 +1,5 @@
-import { SudokuDigitsFactory } from './SudokuDigitsFactory';
-import { SudokuFactory } from './SudokuFactory';
+import { SudokuDigitsFactory } from '../grid/SudokuDigitsFactory';
+import { SudokuFactory } from '../grid/SudokuFactory';
 
 export class GameService {
   constructor(

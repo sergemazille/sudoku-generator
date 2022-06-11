@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { PICKER_COLORS, Puzzle } from '../common/constants';
-import { CellData } from '../Grid/Cell';
+import { CellData } from '../grid/Cell';
 
 const props = defineProps({
   grid: {

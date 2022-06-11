@@ -1,4 +1,4 @@
-import { Cell } from '../Grid/Cell';
+import { Cell } from '../grid/Cell';
 
 export const ColorToken = {
   black: 'black',

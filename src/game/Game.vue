@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, onBeforeMount, ref } from 'vue';
 import { Color, GRID_SIZE, PICKER_COLORS, Puzzle } from '../common/constants';
-import { GameService } from '../Grid/GameService';
+import { GameService } from './GameService';
 import ColorPicker from './ColorPicker.vue';
 import Grid from './Grid.vue';
 

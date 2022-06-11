@@ -1,7 +1,7 @@
 import App from './App.vue';
-import { GameService } from './Grid/GameService';
-import { SudokuDigitsFactory } from './Grid/SudokuDigitsFactory';
-import { SudokuFactory } from './Grid/SudokuFactory';
+import { GameService } from './game/GameService';
+import { SudokuDigitsFactory } from './grid/SudokuDigitsFactory';
+import { SudokuFactory } from './grid/SudokuFactory';
 import { createApp } from 'vue';
 
 const sudokuDigitsFactory = new SudokuDigitsFactory();
