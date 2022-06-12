@@ -1,4 +1,4 @@
-<script></script>
+<script setup lang="ts"></script>
 
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176.98 179.45" class="spinner" fill="currentColor">
