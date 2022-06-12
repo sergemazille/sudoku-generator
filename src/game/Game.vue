@@ -40,14 +40,14 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="spinner">
+  <div class="center-content spinner">
     <Spinner v-if="isLoading" />
   </div>
 
-  <div class="wrapper" v-if="!isLoading">
+  <div class="center-content" v-if="!isLoading">
     <Grid class="grid" :gameInProgress="gameInProgress" :grid="(sudoku as Puzzle)" :currentColor="currentColor" />
 
-    <div>
+    <div class="actions">
       <ColorPicker class="color-picker" @color-selected="updateCurrentColor" :selectedColor="currentColor" />
 
       <div>
@@ -59,17 +59,18 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
-.spinner {
+
+.center-content {
   display: flex;
   justify-content: center;
 }
 
-.wrapper {
-  display: flex;
-}
-
 .grid {
   margin-right: 15px;
+}
+
+.actions {
+  width: 150px;
 }
 
 .color-picker {
