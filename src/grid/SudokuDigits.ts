@@ -4,32 +4,36 @@ import { GridHelper } from './GridHelper';
 import { Guard } from '../common/Guard';
 
 export class SudokuDigits {
-  private constructor(public readonly digits: Digits) {}  
+  private static solved = false;
+
+  private constructor(public readonly digits: Digits) {}
 
   // brut force...
   static solve(grid: Digits): Digits {
     const gridCopy = [...grid];
 
-    gridCopy.forEach((cellValue, index) => {
+    grid.forEach((cellValue, index) => {
       if (cellValue) {
-        grid[index] = cellValue;
+        gridCopy[index] = cellValue;
         return;
       }
 
-      const cellOptions = GridHelper.getOptionsFromCellIndex({ index, grid });
+      const cellOptions = GridHelper.getOptionsFromCellIndex({ index, grid: gridCopy });
       const chosenIndex = ArrayHelper.pickRandomIndex(cellOptions);
       const value = cellOptions[chosenIndex];
 
-      grid[index] = value;
+      gridCopy[index] = value;
     });
 
-    const isNotSolved = grid.some((item) => !item);
+    const isSolved = gridCopy.every((item) => item);
 
-    if (isNotSolved) {
-      return this.solve(gridCopy);
+    if (isSolved) {
+      this.solved = true;
+  
+      return gridCopy;
     }
 
-    return grid;
+    return []
   }
 
   static seed(size: number) {
@@ -57,7 +61,11 @@ export class SudokuDigits {
 
   static generate(size: number) {
     const seed = this.seed(size);
-    const digits = this.solve(seed);
+    let digits: number[] = [];
+
+    while (!this.solved) {
+      digits = this.solve(seed);
+    }
 
     return new SudokuDigits(digits);
   }
