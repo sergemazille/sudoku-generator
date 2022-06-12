@@ -8,6 +8,7 @@ import Grid from './Grid.vue';
 const gameService = inject('gameService') as GameService;
 
 const sudoku = ref([] as Partial<Puzzle>);
+const isLoading = ref(true);
 const gameInProgress = ref(true);
 const currentColor = ref(PICKER_COLORS[0]);
 
@@ -15,14 +16,12 @@ async function generateSudoku() {
   sudoku.value = (await gameService.create(GRID_SIZE)) as Puzzle;
 }
 
-function endGame() {
-  gameInProgress.value = false;
-}
-
-function newGame() {
+async function newGame() {
   gameInProgress.value = true;
+  isLoading.value = true;
 
-  generateSudoku();
+  await generateSudoku();
+  isLoading.value = false;
 }
 
 function updateCurrentColor(value: string) {
@@ -30,9 +29,8 @@ function updateCurrentColor(value: string) {
 }
 
 function resolveSudoku() {
+  gameInProgress.value = false;
   sudoku.value = gameService.solve(sudoku.value as Puzzle);
-
-  endGame();
 }
 
 onBeforeMount(() => {
@@ -41,13 +39,12 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="!isLoading">
     <Grid
       class="grid"
       :gameInProgress="gameInProgress"
       :grid="(sudoku as Puzzle)"
       :currentColor="currentColor"
-      @game-ended="endGame"
     />
 
     <div>
