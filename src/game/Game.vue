@@ -4,6 +4,7 @@ import { GRID_SIZE, PICKER_COLORS, Puzzle } from '../common/constants';
 import ColorPicker from './ColorPicker.vue';
 import { GameService } from './GameService';
 import Grid from './Grid.vue';
+import Spinner from './Spinner.vue';
 
 const gameService = inject('gameService') as GameService;
 
@@ -39,13 +40,12 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <div class="spinner">
+    <Spinner v-if="isLoading" />
+  </div>
+
   <div class="wrapper" v-if="!isLoading">
-    <Grid
-      class="grid"
-      :gameInProgress="gameInProgress"
-      :grid="(sudoku as Puzzle)"
-      :currentColor="currentColor"
-    />
+    <Grid class="grid" :gameInProgress="gameInProgress" :grid="(sudoku as Puzzle)" :currentColor="currentColor" />
 
     <div>
       <ColorPicker class="color-picker" @color-selected="updateCurrentColor" :selectedColor="currentColor" />
@@ -59,6 +59,11 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
+.spinner {
+  display: flex;
+  justify-content: center;
+}
+
 .wrapper {
   display: flex;
 }
